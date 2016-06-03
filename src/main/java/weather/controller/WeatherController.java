@@ -1,7 +1,7 @@
 package weather.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import weather.domain.WeatherData;
 import weather.service.WeatherService;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 
 @RestController
 @RequestMapping("/weather")
@@ -39,13 +36,6 @@ public class WeatherController {
 		logger.debug("Provider has received request to get person with location: "
 				+ location);
 		return weatherService.getWeatherData(location);
-	}
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	public List<WeatherData> getWeatherDataList() {
-		logger.debug("Provider has received request to get person with location");
-		return new ArrayList<WeatherData>();
 	}
 
 }

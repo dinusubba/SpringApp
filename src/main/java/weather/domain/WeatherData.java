@@ -1,5 +1,6 @@
 package weather.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class WeatherData {
@@ -7,8 +8,8 @@ public class WeatherData {
 	private String location;
 	private Date updatedTime;
 	private String weatherCondition;
-	private String temperature;
-	private String windSpeed;
+	private int temperature;
+	private BigDecimal windSpeed;
 	
 	public String getLocation() {
 		return location;
@@ -28,16 +29,16 @@ public class WeatherData {
 	public void setWeatherCondition(String weatherCondition) {
 		this.weatherCondition = weatherCondition;
 	}
-	public String getTemperature() {
+	public int getTemperature() {
 		return temperature;
 	}
-	public void setTemperature(String temperature) {
+	public void setTemperature(int temperature) {
 		this.temperature = temperature;
 	}
-	public String getWindSpeed() {
+	public BigDecimal getWindSpeed() {
 		return windSpeed;
 	}
-	public void setWindSpeed(String windSpeed) {
+	public void setWindSpeed(BigDecimal windSpeed) {
 		this.windSpeed = windSpeed;
 	}
 	

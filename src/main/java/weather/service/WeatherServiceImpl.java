@@ -1,20 +1,53 @@
 package weather.service;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Named;
+import javax.xml.bind.JAXBException;
 
 import weather.domain.Location;
 import weather.domain.WeatherData;
 import weather.repo.WeatherRepo;
 
+import com.github.fedy2.weather.YahooWeatherService;
+import com.github.fedy2.weather.data.Channel;
+import com.github.fedy2.weather.data.unit.DegreeUnit;
+
 @Named("weatherService")
 public class WeatherServiceImpl implements WeatherService {
 
 	WeatherRepo weatherRepo = new WeatherRepo();
-	
+
 	public WeatherData getWeatherData(String location) {
-		return new WeatherData();
+		YahooWeatherService service;
+		WeatherData weatherData = new WeatherData();
+		try {
+			service = new YahooWeatherService();
+			List<Channel> channels = service.getForecastForLocation(location,
+					DegreeUnit.CELSIUS).first(1);
+			for (Channel channel : channels) {
+				weatherData.setLocation(channel.getTitle());
+				weatherData.setTemperature(channel.getItem().getCondition()
+						.getTemp());
+				weatherData.setWindSpeed(new BigDecimal(channel.getWind()
+						.getSpeed()));
+				weatherData.setWeatherCondition(channel.getItem()
+						.getCondition().getText());
+				weatherData.setUpdatedTime(channel.getItem().getCondition()
+						.getDate());
+
+			}
+
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return weatherData;
 	}
 
 	@Override
