@@ -2,6 +2,7 @@ package weather.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import javax.inject.Named;
@@ -32,11 +33,13 @@ public class WeatherServiceImpl implements WeatherService {
 				weatherData.setTemperature(channel.getItem().getCondition()
 						.getTemp());
 				weatherData.setWindSpeed(new BigDecimal(channel.getWind()
-						.getSpeed()));
+						.getSpeed()).setScale(2, RoundingMode.CEILING));
 				weatherData.setWeatherCondition(channel.getItem()
 						.getCondition().getText());
 				weatherData.setUpdatedTime(channel.getItem().getCondition()
 						.getDate());
+				weatherData.setLocation(location);
+				break;
 
 			}
 
